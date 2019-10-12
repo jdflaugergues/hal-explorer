@@ -25,7 +25,6 @@
 export default {
   methods: {
     testComponent: () => {
-      console.log('testComponent executed');
       return 'testComponent return'
     }
   },
