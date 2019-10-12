@@ -2,6 +2,7 @@
   <div class="explorer">
     <h1>Explorer</h1>
     <Navigation></Navigation>
+    <br>
     <Resources></Resources>
   </div>
 </template>

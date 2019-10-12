@@ -46,9 +46,9 @@ export const mutations = {
 };
 
 export const actions = {
-  [SEND_URL] (context, url) {
+  [SEND_URL] (context, { url, headers }) {
     return new Promise(async (resolve) => {
-      const response = await hal.sendUrl(url);
+      const response = await hal.sendUrl(url, headers);
       context.commit(SET_RESPONSE_URL, { response });
       resolve(response);
     })
