@@ -1,0 +1,65 @@
+{
+  "books": {
+    "totalCount": 3,
+    "_links":{
+      "self":{
+        "href":"/author/4554"
+      },
+      "curies":[
+        {
+          "name":"ns",
+          "href":"http://booklistapi.com/rels/{rel}",
+          "templated":true
+        },
+        {
+          "name":"iwe",
+          "href":"http://booklistapi.com/rels/{rel}"
+        }
+      ],
+      "ht:users": {
+        "href": "/users"
+      },
+      "ns:signup": {
+        "href": "/signup"
+      },
+      "ns:me": {
+        "href": "/users/{name}",
+        "templated": true
+      },
+      "iwe:latest-posts": {
+        "href": "/posts/latest"
+      }
+    },
+    "_embedded":{
+      "books":[
+        {
+          "_links":{
+            "self":{
+              "href":"/books/123"
+            }
+          },
+          "Title":"RESTful Web APIs",
+          "Price":"$31.92"
+        },
+        {
+          "_links":{
+            "self":{
+              "href":"/books/366"
+            }
+          },
+          "Title":"RESTful Web Services",
+          "Price":"$79.78"
+        },
+        {
+          "_links":{
+            "self":{
+              "href":"/books/865"
+            }
+          },
+          "Title":"Ruby Cookbook",
+          "Price":"$34.35"
+        }
+      ]
+    }
+  }
+}
