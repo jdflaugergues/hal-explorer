@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jdflaugergues/hal-explorer.svg?branch=master)](https://travis-ci.org/jdflaugergues/hal-explorer)
+
 # hal-explorer
 
 > HAL Explorer
