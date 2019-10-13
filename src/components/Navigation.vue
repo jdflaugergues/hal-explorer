@@ -29,7 +29,7 @@ export default {
   mixins: [validationMixin],
   data: () => ({
     form: {
-      url: 'books',
+      url: 'api',
       headers: '{\n  "Accept": "application/hal+json"\n}'
     }
   }),

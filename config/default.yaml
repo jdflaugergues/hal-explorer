@@ -1,0 +1,5 @@
+mountPoint: /api
+log:
+  name: hal-explorer
+port: 5000
+paginationPerPage: 10

@@ -1,12 +1,10 @@
-const express = require('express');
-const serveStatic = require('serve-static');
-const path = require('path');
+const config = require('config');
+const bunyan = require('bunyan');
 
-const app = express();
-const port = process.env.PORT || 5000;
+const app = require('./app');
 
-app.use(serveStatic(path.join(__dirname, '../dist')));
+const log = bunyan.createLogger(config.log);
+const port = process.env.PORT || config.port;
+
 app.listen(port);
-
-/* eslint-disable no-console */
-console.log('server started on port ' + port)
+log.info('server started on:', port);
