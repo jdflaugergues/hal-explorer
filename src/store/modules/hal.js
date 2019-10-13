@@ -14,8 +14,8 @@ export const initialState = {
 const getters = {
   responseURL: state => state.responseURL,
   responseHeaders: state => {
-    if (!state.responseURL.response && !state.responseURL.headers) {
-      return;
+    if (!state.responseURL.response && !state.responseURL.headers && state.responseURL instanceof Error) {
+      return state.responseURL.message;
     }
 
     const response = state.responseURL.response || state.responseURL;
@@ -35,7 +35,8 @@ const getters = {
     }, `${head}\n`)
   },
   responseBody: state => {
-    return state.responseURL.data;
+    const responseURL = state.responseURL;
+    return responseURL.data || (responseURL.response && responseURL.response.data);
   }
 };
 

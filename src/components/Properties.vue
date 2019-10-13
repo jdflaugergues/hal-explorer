@@ -12,14 +12,14 @@ export default {
       const responseBody = this.$store.getters.responseBody;
 
       try {
-        const body = JSON.parse(JSON.stringify(responseBody));
+        const body = JSON.parse((typeof responseBody !== 'string') ? JSON.stringify(responseBody) : responseBody);
         if (body) {
           delete body._links;
           delete body._embedded;
         }
         return body;
       } catch (e) {
-        return responseBody;
+        return '';
       }
     }
   }
