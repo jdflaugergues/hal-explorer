@@ -19,9 +19,10 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
+import { mapState } from 'vuex';
 
 import { JSONValidator } from '../libs/validators';
-import { SEND_URL } from '../store/action-types';
+import { SEND_REQUEST } from '../store/action-types';
 import { SET_LOADING } from '../store/mutation-types';
 
 export default {
@@ -29,8 +30,8 @@ export default {
   mixins: [validationMixin],
   data: () => ({
     form: {
-      url: 'api',
-      headers: '{\n  "Accept": "application/hal+json"\n}'
+      url: '',
+      headers: '{\n  \n}'
     }
   }),
   validations: {
@@ -61,18 +62,32 @@ export default {
     },
     sendRequest () {
       const payload = {
+        method: 'get',
         url: this.form.url,
         headers: this.form.headers && JSON.parse(this.form.headers) || {}
       }
 
       this.$store.commit(SET_LOADING, {isLoading: true});
-      return this.$store.dispatch(SEND_URL, payload)
+      return this.$store.dispatch(SEND_REQUEST, payload)
         .then(() => { this.$store.commit(SET_LOADING, {isLoading: false}); })
     }
   },
-  created () {
+  computed: {
+    ...mapState({
+      requestURL: state => state.request.requestURL,
+    })
+  },
+  watch: {
+    '$store.state.request.requestURL': {
+      handler (newRequestURL) {
+        this.form.url = newRequestURL;
+      }
+    }
+  },
+  mounted() {
+    this.form.url = this.requestURL;
     this.sendRequest();
-  }
+  },
 }
 </script>
 
@@ -83,5 +98,6 @@ export default {
   .submit-button {
     width: 100%;
     margin: 0;
+    justify-content: center;
   }
 </style>

@@ -17,12 +17,13 @@ function addListLinks(resources, baseUrl, pagination, totalCount) {
     const prevStartRange = offset - limit >= 0 ? offset - limit : 0;
     const firstEndRange = setEndRange(0, limit, totalCount);
 
+    resources.addLink('first', `${baseUrl}?range=0-${firstEndRange}`);
+
     if (prevStartRange !== 0) {
       const prevEndRange = setEndRange(prevStartRange, limit, totalCount);
 
       resources.addLink('prev', `${baseUrl}?range=${prevStartRange}-${prevEndRange}`);
     }
-    resources.addLink('first', `${baseUrl}?range=0-${firstEndRange}`);
   }
 
   if (offset + limit - 1 < totalCount) {

@@ -1,1 +1,1 @@
-export const SEND_URL = 'sendUrl';
+export const SEND_REQUEST = 'sendUrl';

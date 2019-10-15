@@ -17,6 +17,8 @@ const paginationConfig = { unit: 'authors', maximum: paginationPerPage };
 authorsRouter
   .get('/', validateQuery, pagination(paginationConfig), getAuthors)
   .get('/:authorId', getAuthor)
+  .put('/:authorId', bodyParser(), validateBody(authorPostSchema), replaceAuthor)
+  .patch('/:authorId', bodyParser(), updateAuthor)
   .delete('/:authorId', deleteAuthor)
   .post('/', bodyParser(), validateBody(authorPostSchema), createAuthor)
 
@@ -47,10 +49,7 @@ async function getAuthors(ctx) {
     .addEmbed('authors', embeddedAuthors);
 
   hal.addListLinks(resources, baseUrl, ctx.state.pagination, authorsData.length);
-  ctx.response.set(
-    'Access-Control-Allow-Origin',
-    `http://haltalk.herokuapp.com`
-  );
+
   ctx.type = 'application/hal+json';
   ctx.body = resources;
   ctx.status = 200;
@@ -79,5 +78,36 @@ async function createAuthor(ctx) {
     .addLink('self', `${mountPoint}/authors/${author._id}`);
   ctx.status = 201;
 }
+
+async function replaceAuthor(ctx) {
+  const authorIndex = _.findIndex(authorsData, { _id: ctx.params.authorId });
+  ctx.assert(authorIndex !== -1, 404, `No author for id ${ctx.params.authorId}`, { code: errors.NOT_FOUND });
+
+  const newAuthor = {
+    _id: ctx.params.authorId,
+    ...ctx.request.body
+  }
+  authorsData[authorIndex] = newAuthor;
+
+  ctx.type = 'application/hal+json';
+  ctx.body = halson(newAuthor).addLink('self', `${mountPoint}/authors/${newAuthor._id}`);
+  ctx.status = 200;
+}
+
+async function updateAuthor(ctx) {
+  const authorIndex = _.findIndex(authorsData, { _id: ctx.params.authorId });
+  ctx.assert(authorIndex !== -1, 404, `No author for id ${ctx.params.authorId}`, { code: errors.NOT_FOUND });
+
+  const updatedAuthor = {
+    ...authorsData[authorIndex],
+    ...ctx.request.body
+  }
+  authorsData[authorIndex] = updatedAuthor;
+
+  ctx.type = 'application/hal+json';
+  ctx.body = halson(updatedAuthor).addLink('self', `${mountPoint}/authors/${updatedAuthor._id}`);
+  ctx.status = 200;
+}
+
 
 module.exports = authorsRouter;
