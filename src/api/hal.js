@@ -1,8 +1,13 @@
 import Vue from 'vue'
 
 export default {
-  sendUrl: (url, headers) =>
-    Vue.axios.get(url, {headers})
+  request: (method, url, headers, body) =>
+    Vue.axios({
+      method,
+      url,
+      headers,
+      data: body
+    })
       .then(
         response => response,
         response => response,

@@ -7,12 +7,13 @@
 
 <script>
 export default {
+  name: 'Properties',
   computed: {
     properties () {
-      const responseBody = this.$store.getters.responseBody;
+      const data = this.$store.getters.responseData;
 
       try {
-        const body = JSON.parse((typeof responseBody !== 'string') ? JSON.stringify(responseBody) : responseBody);
+        const body = JSON.parse((typeof data !== 'string') ? JSON.stringify(data) : data);
         if (body) {
           delete body._links;
           delete body._embedded;
@@ -29,22 +30,5 @@ export default {
 <style scoped>
   .properties {
     width: 100%;
-  }
-  pre {
-    display: block;
-    padding: 9.5px;
-    margin: 0 0 10px;
-    font-size: 13px;
-    line-height: 20px;
-    word-break: break-all;
-    word-wrap: break-word;
-    white-space: pre;
-    white-space: pre-wrap;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
   }
 </style>

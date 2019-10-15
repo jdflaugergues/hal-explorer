@@ -1,18 +1,21 @@
 <template>
   <div class="resources">
-    <Properties></Properties>
     <Links></Links>
+    <Properties></Properties>
+    <EmbeddedResources></EmbeddedResources>
   </div>
 </template>
 
 <script>
 import Properties from './Properties';
 import Links from './Links';
+import EmbeddedResources from './EmbeddedResources';
 
 export default {
   components: {
+    Links,
     Properties,
-    Links
+    EmbeddedResources
   }
 }
 </script>
