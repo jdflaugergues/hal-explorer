@@ -22,6 +22,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.use(serve(path.join(__dirname, '../dist')));
+app.use(serve(path.join(__dirname, './public')));
 
 router.routes().router.stack.forEach((route) => {
   if (route.methods.length) {

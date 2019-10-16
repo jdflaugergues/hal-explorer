@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    goToEntryPoint(){
+    goToEntryPoint() {
       this.$store.dispatch(GO_TO_ENTRY_POINT);
     },
     goToGithubProject() {

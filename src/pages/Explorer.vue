@@ -5,19 +5,30 @@
       <Explorer></Explorer>
     </md-content>
     <md-content class="md-elevation-2">
-      <Inspector></Inspector>
+      <Inspector v-if="showInspector"></Inspector>
+      <Documentation v-if="showDocumentation"></Documentation>
     </md-content>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import NavigationBar from '../components/NavigationBar'
 import Explorer from '../components/Explorer'
 import Inspector from '../components/Inspector'
+import Documentation from '../components/Documentation'
 
 export default {
   name: 'ExplorerPage',
+  computed: {
+    ...mapState({
+      showDocumentation: state => state.request.showDocumentation,
+      showInspector: state => state.request.showInspector,
+    })
+  },
   components: {
+    Documentation,
     NavigationBar,
     Explorer,
     Inspector
@@ -25,11 +36,6 @@ export default {
 }
 </script>
 
-<style>
-  .md-content {
-    margin: 16px;
-    padding: 16px;
-    width: 48%;
-    display: inline-flex;
-  }
+<style scoped>
+
 </style>
