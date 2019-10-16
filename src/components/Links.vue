@@ -56,7 +56,7 @@
 <script>
 import LinkActionButton from './LinkActionButton';
 import ActionRequestDialog from './ActionRequestDialog';
-import { SEND_REQUEST } from '../store/action-types';
+import { SEND_REQUEST, GET_DOCUMENTATION } from '../store/action-types';
 import { SET_LOADING } from '../store/mutation-types';
 
 export default {
@@ -86,9 +86,8 @@ export default {
     handleSendRequest({url, headers, body }) {
       this.sendRequest(this.linkType, url, headers, body)
     },
-    handleShowDoc() {
-      // TODO: Show Doc
-      // console.log('docRef', docRef)
+    handleShowDoc(docUrl) {
+      this.$store.dispatch(GET_DOCUMENTATION, { docUrl });
     },
     sendRequest(method, url, headers, body) {
       const payload = {

@@ -2,8 +2,15 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import hal from '../../api/hal';
-import { SEND_REQUEST, GET_ALLOWED_METHODS, GO_TO_ENTRY_POINT } from '../action-types';
-import { SET_RESPONSE, SET_REQUEST_HEADERS, SET_REQUEST_URL } from '../mutation-types';
+import { SEND_REQUEST, GET_ALLOWED_METHODS, GET_DOCUMENTATION, GO_TO_ENTRY_POINT } from '../action-types';
+import {
+  SET_RESPONSE,
+  SET_REQUEST_HEADERS,
+  SET_REQUEST_URL,
+  SHOW_INSPECTOR,
+  SHOW_DOCUMENTATION,
+  SET_DOCUMENTATION
+} from '../mutation-types';
 
 const ROOT_URL = '/api';
 
@@ -13,6 +20,9 @@ export const initialState = {
   requestURL: ROOT_URL,
   requestHeaders: {},
   response: {},
+  documentation: '',
+  showDocumentation: false,
+  showInspector: true
 };
 
 const getters = {
@@ -47,11 +57,22 @@ export const mutations = {
   [SET_RESPONSE] (state, payload) {
     state.response = payload.response;
   },
+  [SET_DOCUMENTATION] (state, payload) {
+    state.documentation = payload.documentation;
+  },
   [SET_REQUEST_HEADERS] (state, payload) {
     state.requestHeaders = payload.requestHeaders;
   },
   [SET_REQUEST_URL] (state, payload) {
     state.requestURL = payload.requestURL;
+  },
+  [SHOW_DOCUMENTATION] (state) {
+    state.showDocumentation = true;
+    state.showInspector = false;
+  },
+  [SHOW_INSPECTOR] (state) {
+    state.showInspector = true;
+    state.showDocumentation = false;
   }
 };
 
@@ -98,8 +119,17 @@ export const actions = {
 
       context.commit(SET_RESPONSE, { response });
       context.commit(SET_REQUEST_URL, { requestURL: url });
+      context.commit(SHOW_INSPECTOR);
       resolve(response);
     })
+  },
+  [GET_DOCUMENTATION] (context, { docUrl }) {
+    return new Promise(async (resolve) => {
+      const response = await hal.request('get', docUrl, context.state.requestHeaders);
+      context.commit(SHOW_DOCUMENTATION);
+      context.commit(SET_DOCUMENTATION, { documentation: response.data });
+      resolve(response);
+    });
   },
   [GO_TO_ENTRY_POINT] (context) {
     const payload = {

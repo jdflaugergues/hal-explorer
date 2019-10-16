@@ -34,4 +34,10 @@ export default {
     -moz-border-radius: 4px;
     border-radius: 4px;
   }
+  .md-content {
+    margin: 16px;
+    padding: 16px;
+    width: 48%;
+    display: inline-flex;
+  }
 </style>

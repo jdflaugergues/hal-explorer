@@ -7,20 +7,24 @@ const _ = require('lodash');
 const { ObjectID } = require('bson');
 const { mountPoint, paginationPerPage } = require('config');
 
-const authorsData = _.cloneDeep(require('../data/authors'));
+let authorsData = _.cloneDeep(require('../data/authors'));
 const authorPostSchema = require('../schemas/author-post');
 const hal = require('../lib/hal');
 const { errors } = require('../lib/errors');
 const { pagination, validateQuery, validateBody } = require('../middleware');
 const paginationConfig = { unit: 'authors', maximum: paginationPerPage };
 
+function restoreDefaultData() {
+  authorsData = _.cloneDeep(require('../data/authors'));
+}
+
 authorsRouter
   .get('/', validateQuery, pagination(paginationConfig), getAuthors)
   .get('/:authorId', getAuthor)
+  .post('/', bodyParser(), validateBody(authorPostSchema), createAuthor)
   .put('/:authorId', bodyParser(), validateBody(authorPostSchema), replaceAuthor)
   .patch('/:authorId', bodyParser(), updateAuthor)
-  .delete('/:authorId', deleteAuthor)
-  .post('/', bodyParser(), validateBody(authorPostSchema), createAuthor)
+  .delete('/:authorId', deleteAuthor);
 
 async function getAuthor(ctx) {
   const author = _.find(authorsData, { _id: ctx.params.authorId });
@@ -32,6 +36,9 @@ async function getAuthor(ctx) {
 
 async function getAuthors(ctx) {
   const baseUrl = `${mountPoint}/authors`;
+  if (!authorsData.length) {
+    restoreDefaultData();
+  }
   ctx.state.pagination.length = authorsData.length;
 
   const embeddedAuthors = authorsData
@@ -74,6 +81,7 @@ async function createAuthor(ctx) {
 
   authorsData.push(author);
 
+  ctx.response.set('Location', `${mountPoint}/authors/${author._id}`);
   ctx.type = 'application/hal+json';
   ctx.body = halson(author)
     .addLink('self', `${mountPoint}/authors/${author._id}`);
