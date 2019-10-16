@@ -1,35 +1,29 @@
 [![Build Status](https://travis-ci.org/jdflaugergues/hal-explorer.svg?branch=master)](https://travis-ci.org/jdflaugergues/hal-explorer)
 
-# hal-explorer
+# HAL Explorer
 
-> HAL Explorer
+> An API browser for the application/hal+json media type.
 
-## Build Setup
+Details about HAL can be found [here](https://github.com/mikekelly/hal_specification).
 
-``` bash
-# install dependencies
-npm install
+## Example Usage
+Here is an example of usage:
 
-# serve with hot reload at localhost:8080
-npm run dev
+https://hal-explorer.herokuapp.com
 
-# build for production with minification
-npm run build
+## Usage Instructions
+To integrate HAL Explorer in your own REST API project, all you should need is to copy `dist` folder of this project in your served public folder.
+Example in Node.js with Koa framework.
+```ecmascript 6
+const Koa = require('koa');
+const path = require('path');
 
-# build for production and view the bundle analyzer report
-npm run build --report
+const app = new Koa();
+app.use(serve(path.join(__dirname, './public')));
 
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+According `dist` content is copied in `public/api/docs/`, the `HAL Explorer` UI will be available at `http://<your-domain>/api/docs` address.
 
 ## Contributors
 
