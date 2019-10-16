@@ -1,19 +1,19 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import VueMaterial from 'vue-material'
+import Vue from 'vue';
+import VueMaterial from 'vue-material';
 
-import App from './App'
-import router from './router'
+import App from './App';
+import router from './router';
 import store from './store';
 import ApiService from './services/api.service';
 
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
 
-Vue.use(VueMaterial)
+Vue.use(VueMaterial);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 ApiService.init();
 
@@ -21,5 +21,5 @@ ApiService.init();
 new Vue({
   store,
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App)
+}).$mount('#app');

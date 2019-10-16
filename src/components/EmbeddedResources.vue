@@ -8,7 +8,7 @@
             {{ resolveResourceHeader(resourcesName, resource, index) }}
           </div>
         </md-card-header-text>
-        <md-card-content v-if="!!resourcesShown[`${resourcesName}${index}`]" >
+        <md-card-content v-if="!!resourcesShown[`${resourcesName}${index}`]">
           <Resources :data="allResources[`${resourcesName}${index}`]"></Resources>
         </md-card-content>
       </md-card>
@@ -26,7 +26,7 @@ export default {
     return {
       allResources: {},
       resourcesShown: {}
-    }
+    };
   },
   computed: {
     hasEmbeddedResource() {
@@ -53,38 +53,37 @@ export default {
       }
     },
     resolveResourceHeader(resourcesName, resource, index) {
-      return `${resourcesName}[${index}]: ${resource.name} (${resource._id})`
+      return `${resourcesName}[${index}]: ${resource.name} (${resource._id})`;
     },
     toggleDisplay(resourcesName, resource, index) {
-      this.$store.dispatch(GET_ALLOWED_METHODS, { resource })
-        .then((linkedResource) => {
-          this.allResources = {
-            ...this.allResources,
-            [`${resourcesName}${index}`]: linkedResource
-          };
-        });
+      this.$store.dispatch(GET_ALLOWED_METHODS, { resource }).then((linkedResource) => {
+        this.allResources = {
+          ...this.allResources,
+          [`${resourcesName}${index}`]: linkedResource
+        };
+      });
       this.resourcesShown = {
         ...this.resourcesShown,
         [`${resourcesName}${index}`]: !this.resourcesShown[`${resourcesName}${index}`]
       };
-    },
+    }
   },
   components: {
     Resources: () => import('./Resources')
   }
-}
+};
 </script>
 
 <style scoped>
-  .embedded-resources {
-    width: 100%;
-  }
-  .resource-header {
-    padding: 16px;
-    color: #448aff;
-    cursor: pointer;
-  }
-  .md-card {
-    margin-bottom: 3px;
-  }
+.embedded-resources {
+  width: 100%;
+}
+.resource-header {
+  padding: 16px;
+  color: #448aff;
+  cursor: pointer;
+}
+.md-card {
+  margin-bottom: 3px;
+}
 </style>

@@ -16,11 +16,11 @@ export default {
     Headers,
     Body
   }
-}
+};
 </script>
 
 <style scoped>
-  .inspector {
-    width: 100%;
-  }
+.inspector {
+  width: 100%;
+}
 </style>

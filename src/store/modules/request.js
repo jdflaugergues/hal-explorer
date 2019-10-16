@@ -2,7 +2,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import hal from '../../api/hal';
-import { SEND_REQUEST, GET_ALLOWED_METHODS, GET_DOCUMENTATION, GO_TO_ENTRY_POINT } from '../action-types';
+import {
+  SEND_REQUEST,
+  GET_ALLOWED_METHODS,
+  GET_DOCUMENTATION,
+  GO_TO_ENTRY_POINT
+} from '../action-types';
 import {
   SET_RESPONSE,
   SET_REQUEST_HEADERS,
@@ -26,7 +31,7 @@ export const initialState = {
 };
 
 const getters = {
-  responseHeaders: state => {
+  responseHeaders: (state) => {
     if (!state.response.response && !state.response.headers && state.response instanceof Error) {
       return state.response.message;
     }
@@ -45,32 +50,32 @@ const getters = {
       }
       acc += `\n${key}: ${headers[key]}`;
       return acc;
-    }, `${head}\n`)
+    }, `${head}\n`);
   },
-  responseData: state => {
+  responseData: (state) => {
     const response = state.response;
     return response.data;
   }
 };
 
 export const mutations = {
-  [SET_RESPONSE] (state, payload) {
+  [SET_RESPONSE](state, payload) {
     state.response = payload.response;
   },
-  [SET_DOCUMENTATION] (state, payload) {
+  [SET_DOCUMENTATION](state, payload) {
     state.documentation = payload.documentation;
   },
-  [SET_REQUEST_HEADERS] (state, payload) {
+  [SET_REQUEST_HEADERS](state, payload) {
     state.requestHeaders = payload.requestHeaders;
   },
-  [SET_REQUEST_URL] (state, payload) {
+  [SET_REQUEST_URL](state, payload) {
     state.requestURL = payload.requestURL;
   },
-  [SHOW_DOCUMENTATION] (state) {
+  [SHOW_DOCUMENTATION](state) {
     state.showDocumentation = true;
     state.showInspector = false;
   },
-  [SHOW_INSPECTOR] (state) {
+  [SHOW_INSPECTOR](state) {
     state.showInspector = true;
     state.showDocumentation = false;
   }
@@ -78,35 +83,40 @@ export const mutations = {
 
 // fetch allowed methods for all links
 async function enrichLinksWithAllowedMethods(data, headers) {
-  const links = await Promise.all(Object.keys(data._links).map(async (key) => {
-    const responseOptions = await hal.request('options', data._links[key].href, headers);
-    if (key === 'curies') {
-      return { [key]: data._links[key]};
-    }
-    return {
-      [key]: {
-        ...data._links[key],
-        allow: responseOptions.headers && responseOptions.headers.allow.toLowerCase()
+  const links = await Promise.all(
+    Object.keys(data._links).map(async (key) => {
+      const responseOptions = await hal.request('options', data._links[key].href, headers);
+      if (key === 'curies') {
+        return { [key]: data._links[key] };
       }
-    }
-  }));
-  return links.reduce((acc, link) => ({...acc, ...link}), {});
+      return {
+        [key]: {
+          ...data._links[key],
+          allow: responseOptions.headers && responseOptions.headers.allow.toLowerCase()
+        }
+      };
+    })
+  );
+  return links.reduce((acc, link) => ({ ...acc, ...link }), {});
 }
 
 export const actions = {
-  [GET_ALLOWED_METHODS] (context, { resource }) {
+  [GET_ALLOWED_METHODS](context, { resource }) {
     return new Promise(async (resolve) => {
       if (resource && resource._links) {
-        resource._links = await enrichLinksWithAllowedMethods(resource, context.state.requestHeaders);
+        resource._links = await enrichLinksWithAllowedMethods(
+          resource,
+          context.state.requestHeaders
+        );
       }
       resolve(resource);
     });
   },
-  [SEND_REQUEST] (context, { method, url, headers, body }) {
+  [SEND_REQUEST](context, { method, url, headers, body }) {
     const requestHeaders = headers || context.state.requestHeaders;
 
     if (headers) {
-      context.commit(SET_REQUEST_HEADERS, { requestHeaders })
+      context.commit(SET_REQUEST_HEADERS, { requestHeaders });
     }
 
     return new Promise(async (resolve) => {
@@ -121,9 +131,9 @@ export const actions = {
       context.commit(SET_REQUEST_URL, { requestURL: url });
       context.commit(SHOW_INSPECTOR);
       resolve(response);
-    })
+    });
   },
-  [GET_DOCUMENTATION] (context, { docUrl }) {
+  [GET_DOCUMENTATION](context, { docUrl }) {
     return new Promise(async (resolve) => {
       const response = await hal.request('get', docUrl, context.state.requestHeaders);
       context.commit(SHOW_DOCUMENTATION);
@@ -131,12 +141,12 @@ export const actions = {
       resolve(response);
     });
   },
-  [GO_TO_ENTRY_POINT] (context) {
+  [GO_TO_ENTRY_POINT](context) {
     const payload = {
       method: 'get',
-      url: ROOT_URL,
-    }
-    context.dispatch(SEND_REQUEST, payload)
+      url: ROOT_URL
+    };
+    context.dispatch(SEND_REQUEST, payload);
   }
 };
 
@@ -146,4 +156,4 @@ export default {
   mutations,
   actions,
   strict: process.env.NODE_ENV !== 'production'
-}
+};

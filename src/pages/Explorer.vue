@@ -14,17 +14,17 @@
 <script>
 import { mapState } from 'vuex';
 
-import NavigationBar from '../components/NavigationBar'
-import Explorer from '../components/Explorer'
-import Inspector from '../components/Inspector'
-import Documentation from '../components/Documentation'
+import NavigationBar from '../components/NavigationBar';
+import Explorer from '../components/Explorer';
+import Inspector from '../components/Inspector';
+import Documentation from '../components/Documentation';
 
 export default {
   name: 'ExplorerPage',
   computed: {
     ...mapState({
-      showDocumentation: state => state.request.showDocumentation,
-      showInspector: state => state.request.showInspector,
+      showDocumentation: (state) => state.request.showDocumentation,
+      showInspector: (state) => state.request.showInspector
     })
   },
   components: {
@@ -33,9 +33,7 @@ export default {
     Explorer,
     Inspector
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

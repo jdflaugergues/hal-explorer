@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default {
   request: (method, url, headers, body) =>
@@ -7,9 +7,5 @@ export default {
       url,
       headers,
       data: body
-    })
-      .then(
-        response => response,
-        error => error.response || error,
-      )
-}
+    }).then((response) => response, (error) => error.response || error)
+};

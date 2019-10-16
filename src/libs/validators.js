@@ -9,8 +9,6 @@ const JSONValidator = (headers) => {
     isValid = false;
   }
   return isValid;
-}
-
-export {
-  JSONValidator
 };
+
+export { JSONValidator };
