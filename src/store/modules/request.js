@@ -2,13 +2,15 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import hal from '../../api/hal';
-import { SEND_REQUEST, GET_ALLOWED_METHODS } from '../action-types';
+import { SEND_REQUEST, GET_ALLOWED_METHODS, GO_TO_ENTRY_POINT } from '../action-types';
 import { SET_RESPONSE, SET_REQUEST_HEADERS, SET_REQUEST_URL } from '../mutation-types';
+
+const ROOT_URL = '/api';
 
 Vue.use(Vuex);
 
 export const initialState = {
-  requestURL: '/api/authors',
+  requestURL: ROOT_URL,
   requestHeaders: {},
   response: {},
 };
@@ -50,7 +52,7 @@ export const mutations = {
   },
   [SET_REQUEST_URL] (state, payload) {
     state.requestURL = payload.requestURL;
-  },
+  }
 };
 
 // fetch allowed methods for all links
@@ -98,6 +100,13 @@ export const actions = {
       context.commit(SET_REQUEST_URL, { requestURL: url });
       resolve(response);
     })
+  },
+  [GO_TO_ENTRY_POINT] (context) {
+    const payload = {
+      method: 'get',
+      url: ROOT_URL,
+    }
+    context.dispatch(SEND_REQUEST, payload)
   }
 };
 
