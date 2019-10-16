@@ -18,8 +18,8 @@ router
     ctx.type = 'application/hal+json';
     ctx.body = halson()
       .addLink('self', `${mountPoint}/`)
-      .addLink('curies', [{ name: 'doc', href: `${mountPoint}/rels/{rel}.md`, templated: true }])
-      .addLink('doc:authors', { href: `${mountPoint}/authors` })
+      .addLink('curies', [{ name: 'hal', href: `${mountPoint}/rels/{rel}.md`, templated: true }])
+      .addLink('hal:authors', { href: `${mountPoint}/authors` })
   });
 
 module.exports = router;

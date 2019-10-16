@@ -1,8 +1,8 @@
 <template>
   <div class="resources">
-    <Links></Links>
-    <Properties></Properties>
-    <EmbeddedResources></EmbeddedResources>
+    <Links :data="data"></Links>
+    <Properties :data="data"></Properties>
+    <EmbeddedResources :data="data"></EmbeddedResources>
   </div>
 </template>
 
@@ -12,6 +12,8 @@ import Links from './Links';
 import EmbeddedResources from './EmbeddedResources';
 
 export default {
+  name: 'Resources',
+  props: ['data'],
   components: {
     Links,
     Properties,

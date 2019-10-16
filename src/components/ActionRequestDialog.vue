@@ -21,7 +21,7 @@
       </md-field>
 
       <md-dialog-actions>
-        <md-button class="md-primary" @click="closeDialog">Cancel</md-button>
+        <md-button class="md-primary" @click="$emit('closeDialog')">Cancel</md-button>
         <md-button type="submit" class="submit-button md-primary">Send Request</md-button>
       </md-dialog-actions>
 
@@ -72,9 +72,6 @@ export default {
     }
   },
   methods: {
-    closeDialog() {
-      this.$emit('closeDialog');
-    },
     sendRequest() {
       this.$v.$touch();
 

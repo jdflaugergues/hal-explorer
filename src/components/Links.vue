@@ -1,7 +1,7 @@
 <template>
   <div class="links">
     <h2>Links</h2>
-    <md-table v-if="links">
+    <md-table v-if="data">
       <md-table-row>
         <md-table-head>Rel</md-table-head>
         <md-table-head>Title</md-table-head>
@@ -13,7 +13,7 @@
         <md-table-head>PATCH</md-table-head>
         <md-table-head>DELETE</md-table-head>
       </md-table-row>
-      <md-table-row v-for="(link, index) in links" :key="link.rel">
+      <md-table-row v-for="(link, index) in getLinks()" :key="link.rel">
         <md-table-cell>{{ index }}</md-table-cell>
         <md-table-cell>{{ link.title }}</md-table-cell>
         <md-table-cell>{{ link.name }}</md-table-cell>
@@ -61,6 +61,7 @@ import { SET_LOADING } from '../store/mutation-types';
 
 export default {
   name: 'Links',
+  props: ['data'],
   data () {
     return {
       showDialog: false,
@@ -85,7 +86,7 @@ export default {
     handleSendRequest({url, headers, body }) {
       this.sendRequest(this.linkType, url, headers, body)
     },
-    handleShowDoc(docRef) {
+    handleShowDoc() {
       // TODO: Show Doc
       // console.log('docRef', docRef)
     },
@@ -103,12 +104,9 @@ export default {
           this.showDialog = false;
           this.$store.commit(SET_LOADING, {isLoading: false}); })
     },
-  },
-  computed: {
-    links () {
-      const data = this.$store.getters.responseData;
+    getLinks() {
       try {
-        const body = JSON.parse(JSON.stringify(data));
+        const body = JSON.parse(JSON.stringify(this.data));
 
         if (!body || !body._links) {
           return [];

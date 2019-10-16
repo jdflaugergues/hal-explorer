@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'NavigationBar',
   data () {
     return {
       title: 'HAL Explorer'

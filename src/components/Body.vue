@@ -7,9 +7,10 @@
 
 <script>
 export default {
+  name: 'Body',
   computed: {
     body () {
-      const data = this.$store.getters.responseData;
+      const data = this.$store.getters.responseData
        if (data && data._links) {
          Object.keys(data._links).forEach(key => delete data._links[key].allow);
        }

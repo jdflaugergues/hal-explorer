@@ -44,7 +44,8 @@ async function getAuthors(ctx) {
     });
 
   const resources = halson({
-    count: embeddedAuthors.length
+    count: embeddedAuthors.length,
+    totalCount: authorsData.length
   })
     .addEmbed('authors', embeddedAuthors);
 
