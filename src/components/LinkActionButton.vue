@@ -2,7 +2,7 @@
   <md-button
     class="button md-dense md-raised link-action-btn"
     :class="classIcon"
-    @click="handleClick"
+    @click="$emit('click', type, url)"
   >
     <md-icon>{{ resolveIcon() }}</md-icon>
   </md-button>
@@ -33,10 +33,6 @@ export default {
   methods: {
     resolveIcon () {
       return mapIcon[this.type];
-    },
-    handleClick(e){
-      e.preventDefault();
-      this.$emit('click', this.type, this.url);
     }
   }
 }

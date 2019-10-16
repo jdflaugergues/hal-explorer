@@ -10,6 +10,6 @@ export default {
     })
       .then(
         response => response,
-        response => response,
+        error => error.response || error,
       )
 }

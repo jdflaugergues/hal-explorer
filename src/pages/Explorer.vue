@@ -16,9 +16,7 @@ import Explorer from '../components/Explorer'
 import Inspector from '../components/Inspector'
 
 export default {
-  data () {
-    return {}
-  },
+  name: 'ExplorerPage',
   components: {
     NavigationBar,
     Explorer,

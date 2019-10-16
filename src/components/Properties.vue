@@ -1,16 +1,17 @@
 <template>
   <div class="properties">
     <h2>Properties</h2>
-    <pre>{{ properties }}</pre>
+    <pre>{{ getProperties() }}</pre>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Properties',
-  computed: {
-    properties () {
-      const data = this.$store.getters.responseData;
+  props: ['data'],
+  methods: {
+    getProperties() {
+      const data = this.data;
 
       try {
         const body = JSON.parse((typeof data !== 'string') ? JSON.stringify(data) : data);

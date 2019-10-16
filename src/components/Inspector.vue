@@ -11,10 +11,7 @@ import Headers from './Headers';
 import Body from './Body';
 
 export default {
-  data () {
-    return {
-    }
-  },
+  name: 'Inspector',
   components: {
     Headers,
     Body
