@@ -19,11 +19,11 @@ export default {
     Properties,
     EmbeddedResources
   }
-}
+};
 </script>
 
 <style scoped>
-  .resources {
-    width: 100%;
-  }
+.resources {
+  width: 100%;
+}
 </style>

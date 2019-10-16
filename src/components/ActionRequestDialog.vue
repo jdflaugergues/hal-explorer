@@ -11,22 +11,24 @@
       <md-field :class="getValidationClass('headers')">
         <label for="headers">Headers</label>
         <md-textarea name="headers" id="headers" v-model="form.headers"></md-textarea>
-        <span class="md-error" v-if="!$v.form.headers.JSONValidator">The headers must be a valid JSON</span>
+        <span class="md-error" v-if="!$v.form.headers.JSONValidator">
+          The headers must be a valid JSON
+        </span>
       </md-field>
 
       <md-field :class="getValidationClass('body')">
         <label for="body">Body</label>
-        <md-textarea name="body" id="body" v-model="form.body" class="request-body" ></md-textarea>
-        <span class="md-error" v-if="!$v.form.body.JSONValidator">The headers must be a valid JSON</span>
+        <md-textarea name="body" id="body" v-model="form.body" class="request-body"></md-textarea>
+        <span class="md-error" v-if="!$v.form.body.JSONValidator">
+          The headers must be a valid JSON
+        </span>
       </md-field>
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="$emit('closeDialog')">Cancel</md-button>
         <md-button type="submit" class="submit-button md-primary">Send Request</md-button>
       </md-dialog-actions>
-
     </form>
-
   </md-dialog>
 </template>
 
@@ -61,8 +63,7 @@ export default {
   }),
   validations: {
     form: {
-      url: {
-      },
+      url: {},
       headers: {
         JSONValidator
       },
@@ -82,24 +83,24 @@ export default {
       const payload = {
         url: this.form.url,
         headers: JSON.parse(this.form.headers),
-        body: JSON.parse(this.form.body),
-      }
+        body: JSON.parse(this.form.body)
+      };
 
       this.$emit('sendRequest', payload);
     },
-    getValidationClass (fieldName) {
-      const field = this.$v.form[fieldName]
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
 
       if (field) {
         return {
           'md-invalid': field.$invalid && field.$dirty
-        }
+        };
       }
-    },
+    }
   },
   computed: {
     ...mapState({
-      requestHeaders: state => state.request.requestHeaders
+      requestHeaders: (state) => state.request.requestHeaders
     })
   },
   mounted() {
@@ -114,18 +115,18 @@ export default {
       this.form.url = this.url;
     }
   }
-}
+};
 </script>
 
 <style>
-  .md-dialog {
-    max-width: 1000px;
-    min-width: 700px;
-  }
-  .request-body {
-    height: 230px !important;
-  }
-  form {
-    padding: 16px;
-  }
+.md-dialog {
+  max-width: 1000px;
+  min-width: 700px;
+}
+.request-body {
+  height: 230px !important;
+}
+form {
+  padding: 16px;
+}
 </style>

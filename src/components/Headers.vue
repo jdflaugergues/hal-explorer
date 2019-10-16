@@ -13,8 +13,7 @@ export default {
   computed: {
     ...mapGetters(['responseHeaders'])
   }
-}
+};
 </script>
 
-<style>
-</style>
+<style></style>

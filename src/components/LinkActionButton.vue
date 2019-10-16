@@ -10,12 +10,12 @@
 
 <script>
 const mapIcon = {
-  'get': 'arrow_downward',
-  'post': 'add',
-  'put': 'cached',
-  'patch': 'arrow_upward',
-  'delete': 'delete',
-}
+  get: 'arrow_downward',
+  post: 'add',
+  put: 'cached',
+  patch: 'arrow_upward',
+  delete: 'delete'
+};
 
 export default {
   name: 'LinkActionButton',
@@ -26,35 +26,35 @@ export default {
     }
   },
   computed: {
-    classIcon () {
-      return {[`${this.type}-button`]: true}
+    classIcon() {
+      return { [`${this.type}-button`]: true };
     }
   },
   methods: {
-    resolveIcon () {
+    resolveIcon() {
       return mapIcon[this.type];
     }
   }
-}
+};
 </script>
 
 <style>
-  .link-action-btn {
-    margin: 6px 8px 6px 0px;
-  }
-  .get-button {
-    background-color: #448aff !important;
-  }
-  .post-button {
-    background-color: #5bb75b !important;
-  }
-  .put-button {
-    background-color: #faa732 !important;
-  }
-  .patch-button {
-    background-color: #faa732 !important;
-  }
-  .delete-button {
-    background-color: #ff5252 !important;
-  }
+.link-action-btn {
+  margin: 6px 8px 6px 0px;
+}
+.get-button {
+  background-color: #448aff !important;
+}
+.post-button {
+  background-color: #5bb75b !important;
+}
+.put-button {
+  background-color: #faa732 !important;
+}
+.patch-button {
+  background-color: #faa732 !important;
+}
+.delete-button {
+  background-color: #ff5252 !important;
+}
 </style>

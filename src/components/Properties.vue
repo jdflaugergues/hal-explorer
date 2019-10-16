@@ -14,7 +14,7 @@ export default {
       const data = this.data;
 
       try {
-        const body = JSON.parse((typeof data !== 'string') ? JSON.stringify(data) : data);
+        const body = JSON.parse(typeof data !== 'string' ? JSON.stringify(data) : data);
         if (body) {
           delete body._links;
           delete body._embedded;
@@ -25,11 +25,11 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
-  .properties {
-    width: 100%;
-  }
+.properties {
+  width: 100%;
+}
 </style>

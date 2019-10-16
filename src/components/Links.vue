@@ -18,28 +18,49 @@
         <md-table-cell>{{ link.title }}</md-table-cell>
         <md-table-cell>{{ link.name }}</md-table-cell>
         <md-table-cell>
-          <md-button
-            class="doc-button md-dense"
-            v-if="link.doc"
-            @click="handleShowDoc(link.doc)"
-          >
+          <md-button class="doc-button md-dense" v-if="link.doc" @click="handleShowDoc(link.doc)">
             <md-icon>library_books</md-icon>
           </md-button>
         </md-table-cell>
         <md-table-cell>
-          <LinkActionButton v-if="link.allow && link.allow.includes('get')" type="get" :url="link.href" @click="handleClickActionButton"></LinkActionButton>
+          <LinkActionButton
+            v-if="link.allow && link.allow.includes('get')"
+            type="get"
+            :url="link.href"
+            @click="handleClickActionButton"
+          ></LinkActionButton>
         </md-table-cell>
         <md-table-cell>
-          <LinkActionButton v-if="link.allow && link.allow.includes('post')" type="post" :url="link.href" @click="handleClickActionButton"></LinkActionButton>
+          <LinkActionButton
+            v-if="link.allow && link.allow.includes('post')"
+            type="post"
+            :url="link.href"
+            @click="handleClickActionButton"
+          ></LinkActionButton>
         </md-table-cell>
         <md-table-cell>
-          <LinkActionButton v-if="link.allow && link.allow.includes('put')" type="put" :url="link.href"  @click="handleClickActionButton"></LinkActionButton>
+          <LinkActionButton
+            v-if="link.allow && link.allow.includes('put')"
+            type="put"
+            :url="link.href"
+            @click="handleClickActionButton"
+          ></LinkActionButton>
         </md-table-cell>
         <md-table-cell>
-          <LinkActionButton v-if="link.allow && link.allow.includes('patch')" type="patch" :url="link.href"  @click="handleClickActionButton"></LinkActionButton>
+          <LinkActionButton
+            v-if="link.allow && link.allow.includes('patch')"
+            type="patch"
+            :url="link.href"
+            @click="handleClickActionButton"
+          ></LinkActionButton>
         </md-table-cell>
         <md-table-cell>
-          <LinkActionButton v-if="link.allow && link.allow.includes('delete')" type="delete" :url="link.href" @click="handleClickActionButton"></LinkActionButton>
+          <LinkActionButton
+            v-if="link.allow && link.allow.includes('delete')"
+            type="delete"
+            :url="link.href"
+            @click="handleClickActionButton"
+          ></LinkActionButton>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -62,17 +83,17 @@ import { SET_LOADING } from '../store/mutation-types';
 export default {
   name: 'Links',
   props: ['data'],
-  data () {
+  data() {
     return {
       showDialog: false,
       linkType: '',
       linkUrl: ''
-    }
+    };
   },
   methods: {
     handleClickActionButton(type, url) {
       const methodsWithRequestBody = ['post', 'put', 'patch'];
-      if (methodsWithRequestBody.includes(type)){
+      if (methodsWithRequestBody.includes(type)) {
         this.linkType = type;
         this.linkUrl = url;
         this.showDialog = true;
@@ -83,8 +104,8 @@ export default {
     handleCloseDialog() {
       this.showDialog = false;
     },
-    handleSendRequest({url, headers, body }) {
-      this.sendRequest(this.linkType, url, headers, body)
+    handleSendRequest({ url, headers, body }) {
+      this.sendRequest(this.linkType, url, headers, body);
     },
     handleShowDoc(docUrl) {
       this.$store.dispatch(GET_DOCUMENTATION, { docUrl });
@@ -95,13 +116,13 @@ export default {
         url,
         headers,
         body
-      }
+      };
 
-      this.$store.commit(SET_LOADING, {isLoading: true});
-      return this.$store.dispatch(SEND_REQUEST, payload)
-        .then(() => {
-          this.showDialog = false;
-          this.$store.commit(SET_LOADING, {isLoading: false}); })
+      this.$store.commit(SET_LOADING, { isLoading: true });
+      return this.$store.dispatch(SEND_REQUEST, payload).then(() => {
+        this.showDialog = false;
+        this.$store.commit(SET_LOADING, { isLoading: false });
+      });
     },
     getLinks() {
       try {
@@ -121,7 +142,9 @@ export default {
           if (link.includes(':')) {
             const splittedLink = link.split(':');
             const linkCurie = body._links.curies.find((curie) => curie.name === splittedLink[0]);
-            formatedLink.doc = linkCurie.templated ? linkCurie.href.replace('{rel}', splittedLink[1]) : linkCurie.href;
+            formatedLink.doc = linkCurie.templated
+              ? linkCurie.href.replace('{rel}', splittedLink[1])
+              : linkCurie.href;
           }
 
           return { ...acc, [link]: formatedLink };
@@ -135,30 +158,31 @@ export default {
     LinkActionButton,
     ActionRequestDialog
   }
-}
-
+};
 </script>
 
 <style>
-  .links {
-    width: 100%;
-  }
+.links {
+  width: 100%;
+}
 
-  .md-table, .md-table-content {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .md-table-cell-container {
-    padding: 6px 0 6px 24px;
-  }
-  .button, .md-button {
-    min-width: 30px !important;
-  }
-  .button {
-    width: auto !important;
-  }
-  .doc-button {
-    margin: 6px 8px 6px 0px;
-  }
+.md-table,
+.md-table-content {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.md-table-cell-container {
+  padding: 6px 0 6px 24px;
+}
+.button,
+.md-button {
+  min-width: 30px !important;
+}
+.button {
+  width: auto !important;
+}
+.doc-button {
+  margin: 6px 8px 6px 0px;
+}
 </style>

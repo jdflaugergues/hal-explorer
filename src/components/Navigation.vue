@@ -9,16 +9,20 @@
       <md-field :class="getValidationClass('headers')">
         <label for="headers">Custom Request Headers</label>
         <md-textarea name="headers" id="headers" v-model="form.headers"></md-textarea>
-        <span class="md-error" v-if="!$v.form.headers.JSONValidator">The headers must be a valid JSON</span>
+        <span class="md-error" v-if="!$v.form.headers.JSONValidator">
+          The headers must be a valid JSON
+        </span>
       </md-field>
 
-      <md-button type="submit" class="submit-button md-dense md-raised md-primary">Send Request</md-button>
+      <md-button type="submit" class="submit-button md-dense md-raised md-primary">
+        Send Request
+      </md-button>
     </form>
   </div>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
+import { validationMixin } from 'vuelidate';
 import { mapState } from 'vuex';
 
 import { JSONValidator } from '../libs/validators';
@@ -36,50 +40,50 @@ export default {
   }),
   validations: {
     form: {
-      url: {
-      },
+      url: {},
       headers: {
         JSONValidator
       }
     }
   },
   methods: {
-    getValidationClass (fieldName) {
-      const field = this.$v.form[fieldName]
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
 
       if (field) {
         return {
           'md-invalid': field.$invalid && field.$dirty
-        }
+        };
       }
     },
-    validateRequest () {
-      this.$v.$touch()
+    validateRequest() {
+      this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        this.sendRequest()
+        this.sendRequest();
       }
     },
-    sendRequest () {
+    sendRequest() {
       const payload = {
         method: 'get',
         url: this.form.url,
-        headers: this.form.headers && JSON.parse(this.form.headers) || {}
-      }
+        headers: (this.form.headers && JSON.parse(this.form.headers)) || {}
+      };
 
-      this.$store.commit(SET_LOADING, {isLoading: true});
-      return this.$store.dispatch(SEND_REQUEST, payload)
-        .then(() => { this.$store.commit(SET_LOADING, {isLoading: false}); })
+      this.$store.commit(SET_LOADING, { isLoading: true });
+      return this.$store.dispatch(SEND_REQUEST, payload).then(() => {
+        this.$store.commit(SET_LOADING, { isLoading: false });
+      });
     }
   },
   computed: {
     ...mapState({
-      requestURL: state => state.request.requestURL,
+      requestURL: (state) => state.request.requestURL
     })
   },
   watch: {
     '$store.state.request.requestURL': {
-      handler (newRequestURL) {
+      handler(newRequestURL) {
         this.form.url = newRequestURL;
       }
     }
@@ -87,17 +91,17 @@ export default {
   mounted() {
     this.form.url = this.requestURL;
     this.sendRequest();
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
-  .navigation {
-    width: 100%;
-  }
-  .submit-button {
-    width: 100%;
-    margin: 0;
-    justify-content: center;
-  }
+.navigation {
+  width: 100%;
+}
+.submit-button {
+  width: 100%;
+  margin: 0;
+  justify-content: center;
+}
 </style>

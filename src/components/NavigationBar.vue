@@ -15,10 +15,10 @@ import IconGithub from './Icons/IconGithub';
 
 export default {
   name: 'NavigationBar',
-  data () {
+  data() {
     return {
       title: 'HAL Explorer'
-    }
+    };
   },
   methods: {
     goToEntryPoint() {
@@ -32,5 +32,5 @@ export default {
   components: {
     IconGithub
   }
-}
+};
 </script>
