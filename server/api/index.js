@@ -2,9 +2,11 @@
 
 const Router = require('koa-router');
 const halson = require('halson');
+const _ = require('lodash');
 const { mountPoint } = require('config');
 
 const authors = require('./authors');
+const books = require('./books');
 
 const router = new Router();
 
@@ -13,7 +15,15 @@ router.get('/ping', (ctx) => {
 });
 
 router
+  .use(async (ctx, next) => {
+    ctx.state.db = {
+      authors: _.cloneDeep(require('../data/authors')),
+      books: _.cloneDeep(require('../data/books'))
+    }
+    await next();
+  })
   .use('/authors', authors.routes(), authors.allowedMethods())
+  .use('/books', books.routes(), books.allowedMethods())
   .get('/', async (ctx) => {
     ctx.type = 'application/hal+json';
     ctx.body = halson({
@@ -25,6 +35,7 @@ router
       .addLink('self', `${mountPoint}/`)
       .addLink('curies', [{ name: 'hal', href: `${mountPoint}/docs/resources/{rel}.md`, templated: true }])
       .addLink('hal:authors', { href: `${mountPoint}/authors`, title: 'Authors' })
+      .addLink('hal:books', { href: `${mountPoint}/books`, title: 'Books' })
   });
 
 module.exports = router;
