@@ -1,26 +1,26 @@
 <template>
   <div class="explorer">
     <h1>Explorer</h1>
-    <Navigation></Navigation>
+    <hal-navigation></hal-navigation>
     <br />
-    <Resources :data="responseData"></Resources>
+    <hal-resources :data="responseData"></hal-resources>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
-import Navigation from './Navigation';
-import Resources from './Resources';
+import HalNavigation from './HalNavigation';
+import HalResources from './HalResources';
 
 export default {
-  name: 'Explorer',
+  name: 'HalExplorer',
   computed: {
     ...mapGetters(['responseData'])
   },
   components: {
-    Navigation,
-    Resources
+    HalNavigation,
+    HalResources
   }
 };
 </script>

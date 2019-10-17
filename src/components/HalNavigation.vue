@@ -30,7 +30,7 @@ import { SEND_REQUEST } from '../store/action-types';
 import { SET_LOADING } from '../store/mutation-types';
 
 export default {
-  name: 'FormRequest',
+  name: 'HalNavigation',
   mixins: [validationMixin],
   data: () => ({
     form: {

@@ -1,20 +1,20 @@
 <template>
   <div class="inspector">
     <h1>Inspector</h1>
-    <Headers></Headers>
-    <Body></Body>
+    <hal-headers></hal-headers>
+    <hal-body></hal-body>
   </div>
 </template>
 
 <script>
-import Headers from './Headers';
-import Body from './Body';
+import HalHeaders from './HalHeaders';
+import HalBody from './HalBody';
 
 export default {
-  name: 'Inspector',
+  name: 'HalInspector',
   components: {
-    Headers,
-    Body
+    HalHeaders,
+    HalBody
   }
 };
 </script>

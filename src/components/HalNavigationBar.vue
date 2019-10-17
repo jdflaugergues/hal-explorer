@@ -3,7 +3,7 @@
     <h1 class="md-title">{{ title }}</h1>
     <md-button @click="goToEntryPoint">Go to entry point</md-button>
     <md-button @click="goToGithubProject">
-      <IconGithub></IconGithub>
+      <hal-icon-github></hal-icon-github>
       <md-tooltip md-direction="right">About HAL Explorer Project</md-tooltip>
     </md-button>
   </md-toolbar>
@@ -11,10 +11,10 @@
 
 <script>
 import { GO_TO_ENTRY_POINT } from '../store/action-types';
-import IconGithub from './Icons/IconGithub';
+import HalIconGithub from './Icons/HalIconGithub';
 
 export default {
-  name: 'NavigationBar',
+  name: 'HalNavigationBar',
   data() {
     return {
       title: 'HAL Explorer'
@@ -30,7 +30,7 @@ export default {
     }
   },
   components: {
-    IconGithub
+    HalIconGithub
   }
 };
 </script>

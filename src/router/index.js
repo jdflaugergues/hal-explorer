@@ -9,7 +9,7 @@ export default new Router({
     {
       path: '/',
       name: 'explorer',
-      component: (r) => require.ensure([], () => r(require('../pages/Explorer.vue').default))
+      component: (r) => require.ensure([], () => r(require('../pages/HalExplorerPage.vue').default))
     },
     {
       path: '/*',

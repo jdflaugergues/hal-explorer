@@ -14,7 +14,7 @@
 import { mapState } from 'vuex';
 
 export default {
-  name: 'ProgressSpinner',
+  name: 'HalProgressSpinner',
   computed: {
     ...mapState({
       overlayStyle: (state) => ({

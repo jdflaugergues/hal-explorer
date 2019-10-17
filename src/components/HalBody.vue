@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Body',
+  name: 'HalBody',
   computed: {
     body() {
       const data = this.$store.getters.responseData;

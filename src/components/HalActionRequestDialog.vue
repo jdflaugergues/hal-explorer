@@ -41,7 +41,7 @@ const methods = ['post', 'put', 'patch'];
 const defaultBody = '{\n  \n  \n  \n  \n  \n  \n  \n  \n}';
 
 export default {
-  name: 'ActionRequestDialog',
+  name: 'HalActionRequestDialog',
   mixins: [validationMixin],
   props: {
     type: {
