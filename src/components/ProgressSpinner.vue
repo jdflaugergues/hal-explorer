@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-bind:class="[isLoading ? 'overlay-show' : 'overlay-hide']">
+  <div class="overlay" v-bind:style="overlayStyle">
     <div class="spinner">
       <md-progress-spinner
         :md-diameter="100"
@@ -17,20 +17,15 @@ export default {
   name: 'ProgressSpinner',
   computed: {
     ...mapState({
-      isLoading: (state) => state.loader.isLoading
+      overlayStyle: (state) => ({
+        display: state.loader.isLoading ? 'block' : 'none'
+      })
     })
   }
 };
 </script>
 
 <style scoped>
-.overlay-hide {
-  display: none;
-}
-.overlay-show {
-  display: block;
-}
-
 .overlay {
   position: fixed;
   width: 100%;

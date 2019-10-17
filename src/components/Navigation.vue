@@ -3,7 +3,7 @@
     <form novalidate @submit.prevent="validateRequest">
       <md-field>
         <label for="url">URL</label>
-        <md-input name="url" id="url" v-model="form.url" type="string" value="url"></md-input>
+        <md-input name="url" id="url" v-model.trim="form.url" type="string" value="url"></md-input>
       </md-field>
 
       <md-field :class="getValidationClass('headers')">
@@ -46,14 +46,17 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      requestURL: (state) => state.request.requestURL
+    })
+  },
   methods: {
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
 
       if (field) {
-        return {
-          'md-invalid': field.$invalid && field.$dirty
-        };
+        return { 'md-invalid': field.$invalid && field.$dirty };
       }
     },
     validateRequest() {
@@ -75,11 +78,6 @@ export default {
         this.$store.commit(SET_LOADING, { isLoading: false });
       });
     }
-  },
-  computed: {
-    ...mapState({
-      requestURL: (state) => state.request.requestURL
-    })
   },
   watch: {
     '$store.state.request.requestURL': {

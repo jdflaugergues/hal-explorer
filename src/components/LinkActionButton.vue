@@ -1,20 +1,20 @@
 <template>
   <md-button
     class="button md-dense md-raised link-action-btn"
-    :class="classIcon"
+    :style="iconStyle"
     @click="$emit('click', type, url)"
   >
-    <md-icon>{{ resolveIcon() }}</md-icon>
+    <md-icon>{{ iconName }}</md-icon>
   </md-button>
 </template>
 
 <script>
-const mapIcon = {
-  get: 'arrow_downward',
-  post: 'add',
-  put: 'cached',
-  patch: 'arrow_upward',
-  delete: 'delete'
+const mapMethods = {
+  get: { icon: 'arrow_downward', color: '#448aff' },
+  post: { icon: 'add', color: '#5bb75b' },
+  put: { icon: 'cached', color: '#faa732' },
+  patch: { icon: 'arrow_upward', color: '#faa732' },
+  delete: { icon: 'delete', color: '#ff5252' }
 };
 
 export default {
@@ -22,17 +22,15 @@ export default {
   props: {
     url: String,
     type: {
-      validator: (value) => Object.keys(mapIcon).indexOf(value) !== -1
+      validator: (value) => Object.keys(mapMethods).indexOf(value) !== -1
     }
   },
   computed: {
-    classIcon() {
-      return { [`${this.type}-button`]: true };
-    }
-  },
-  methods: {
-    resolveIcon() {
-      return mapIcon[this.type];
+    iconStyle() {
+      return { 'background-color': `${mapMethods[this.type].color} !important` };
+    },
+    iconName() {
+      return mapMethods[this.type].icon;
     }
   }
 };
@@ -41,20 +39,5 @@ export default {
 <style>
 .link-action-btn {
   margin: 6px 8px 6px 0px;
-}
-.get-button {
-  background-color: #448aff !important;
-}
-.post-button {
-  background-color: #5bb75b !important;
-}
-.put-button {
-  background-color: #faa732 !important;
-}
-.patch-button {
-  background-color: #faa732 !important;
-}
-.delete-button {
-  background-color: #ff5252 !important;
 }
 </style>

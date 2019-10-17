@@ -13,7 +13,7 @@
         <md-table-head>PATCH</md-table-head>
         <md-table-head>DELETE</md-table-head>
       </md-table-row>
-      <md-table-row v-for="(link, index) in getLinks()" :key="link.rel">
+      <md-table-row v-for="(link, index) in links" :key="link.rel">
         <md-table-cell>{{ index }}</md-table-cell>
         <md-table-cell>{{ link.title }}</md-table-cell>
         <md-table-cell>{{ link.name }}</md-table-cell>
@@ -22,42 +22,10 @@
             <md-icon>library_books</md-icon>
           </md-button>
         </md-table-cell>
-        <md-table-cell>
+        <md-table-cell v-for="method in actionMethods" :key="method">
           <LinkActionButton
-            v-if="link.allow && link.allow.includes('get')"
-            type="get"
-            :url="link.href"
-            @click="handleClickActionButton"
-          ></LinkActionButton>
-        </md-table-cell>
-        <md-table-cell>
-          <LinkActionButton
-            v-if="link.allow && link.allow.includes('post')"
-            type="post"
-            :url="link.href"
-            @click="handleClickActionButton"
-          ></LinkActionButton>
-        </md-table-cell>
-        <md-table-cell>
-          <LinkActionButton
-            v-if="link.allow && link.allow.includes('put')"
-            type="put"
-            :url="link.href"
-            @click="handleClickActionButton"
-          ></LinkActionButton>
-        </md-table-cell>
-        <md-table-cell>
-          <LinkActionButton
-            v-if="link.allow && link.allow.includes('patch')"
-            type="patch"
-            :url="link.href"
-            @click="handleClickActionButton"
-          ></LinkActionButton>
-        </md-table-cell>
-        <md-table-cell>
-          <LinkActionButton
-            v-if="link.allow && link.allow.includes('delete')"
-            type="delete"
+            v-if="link.allow && link.allow.includes(method)"
+            :type="method"
             :url="link.href"
             @click="handleClickActionButton"
           ></LinkActionButton>
@@ -85,10 +53,42 @@ export default {
   props: ['data'],
   data() {
     return {
+      actionMethods: ['get', 'post', 'put', 'patch', 'delete'],
       showDialog: false,
       linkType: '',
       linkUrl: ''
     };
+  },
+  computed: {
+    links() {
+      try {
+        const body = JSON.parse(JSON.stringify(this.data));
+
+        if (!body || !body._links) {
+          return [];
+        }
+
+        return Object.keys(body._links).reduce((acc, link) => {
+          if (link === 'curies') {
+            return acc;
+          }
+
+          const formatedLink = { ...body._links[link] };
+
+          if (link.includes(':')) {
+            const splittedLink = link.split(':');
+            const linkCurie = body._links.curies.find((curie) => curie.name === splittedLink[0]);
+            formatedLink.doc = linkCurie.templated
+              ? linkCurie.href.replace('{rel}', splittedLink[1])
+              : linkCurie.href;
+          }
+
+          return { ...acc, [link]: formatedLink };
+        }, {});
+      } catch (e) {
+        return [];
+      }
+    }
   },
   methods: {
     handleClickActionButton(type, url) {
@@ -123,35 +123,6 @@ export default {
         this.showDialog = false;
         this.$store.commit(SET_LOADING, { isLoading: false });
       });
-    },
-    getLinks() {
-      try {
-        const body = JSON.parse(JSON.stringify(this.data));
-
-        if (!body || !body._links) {
-          return [];
-        }
-
-        return Object.keys(body._links).reduce((acc, link) => {
-          if (link === 'curies') {
-            return acc;
-          }
-
-          const formatedLink = { ...body._links[link] };
-
-          if (link.includes(':')) {
-            const splittedLink = link.split(':');
-            const linkCurie = body._links.curies.find((curie) => curie.name === splittedLink[0]);
-            formatedLink.doc = linkCurie.templated
-              ? linkCurie.href.replace('{rel}', splittedLink[1])
-              : linkCurie.href;
-          }
-
-          return { ...acc, [link]: formatedLink };
-        }, {});
-      } catch (e) {
-        return [];
-      }
     }
   },
   components: {

@@ -8,6 +8,9 @@ const { mountPoint } = require('config');
 const authors = require('./authors');
 const books = require('./books');
 
+const authorsData = _.cloneDeep(require('../data/authors'));
+const booksData = _.cloneDeep(require('../data/books'));
+
 const router = new Router();
 
 router.get('/ping', (ctx) => {
@@ -17,9 +20,9 @@ router.get('/ping', (ctx) => {
 router
   .use(async (ctx, next) => {
     ctx.state.db = {
-      authors: _.cloneDeep(require('../data/authors')),
-      books: _.cloneDeep(require('../data/books'))
-    }
+      authors: authorsData,
+      books: booksData
+    };
     await next();
   })
   .use('/authors', authors.routes(), authors.allowedMethods())

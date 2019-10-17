@@ -5,8 +5,7 @@
       <Explorer></Explorer>
     </md-content>
     <md-content class="md-elevation-2">
-      <Inspector v-if="showInspector"></Inspector>
-      <Documentation v-if="showDocumentation"></Documentation>
+      <component :is="currentComponent"></component>
     </md-content>
   </div>
 </template>
@@ -23,8 +22,8 @@ export default {
   name: 'ExplorerPage',
   computed: {
     ...mapState({
-      showDocumentation: (state) => state.request.showDocumentation,
-      showInspector: (state) => state.request.showInspector
+      currentComponent: (state) =>
+        (state.request.showDocumentation && 'Documentation') || 'Inspector'
     })
   },
   components: {
