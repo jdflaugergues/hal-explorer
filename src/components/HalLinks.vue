@@ -85,7 +85,7 @@ export default {
 
           return { ...acc, [link]: formatedLink };
         }, {});
-      } catch (e) {
+      } catch {
         return [];
       }
     }
