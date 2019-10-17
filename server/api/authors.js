@@ -17,7 +17,7 @@ function restoreDefaultData(ctx) {
   ctx.state.db = {
     authors: _.cloneDeep(require('../data/authors')),
     books: _.cloneDeep(require('../data/books'))
-  }
+  };
 }
 
 authorsRouter
@@ -111,7 +111,7 @@ async function replaceAuthor(ctx) {
   const newAuthor = {
     _id: ctx.params.authorId,
     ...ctx.request.body
-  }
+  };
   authorsData[authorIndex] = newAuthor;
 
   ctx.type = 'application/hal+json';
@@ -127,13 +127,12 @@ async function updateAuthor(ctx) {
   const updatedAuthor = {
     ...authorsData[authorIndex],
     ...ctx.request.body
-  }
+  };
   authorsData[authorIndex] = updatedAuthor;
 
   ctx.type = 'application/hal+json';
   ctx.body = halson(updatedAuthor).addLink('self', `${mountPoint}/authors/${updatedAuthor._id}`);
   ctx.status = 200;
 }
-
 
 module.exports = authorsRouter;

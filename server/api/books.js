@@ -11,13 +11,16 @@ const { errors } = require('../lib/errors');
 const { pagination, validateQuery } = require('../middleware');
 const paginationConfig = { unit: 'books', maximum: paginationPerPage };
 
-function restoreDefaultData() {
-  booksData = _.cloneDeep(require('../data/books'));
+function restoreDefaultData(ctx) {
+  ctx.state.db = {
+    authors: _.cloneDeep(require('../data/authors')),
+    books: _.cloneDeep(require('../data/books'))
+  };
 }
 
 booksRouter
   .get('/', validateQuery, pagination(paginationConfig), getBooks)
-  .get('/:bookId', getBook)
+  .get('/:bookId', getBook);
 
 async function getBook(ctx) {
   const book = _.find(booksData, { _id: ctx.params.bookId });
@@ -34,7 +37,7 @@ async function getBooks(ctx) {
   const q = ctx.query.q && JSON.parse(ctx.query.q);
 
   if (!booksData.length) {
-    restoreDefaultData();
+    restoreDefaultData(ctx);
   }
   const filteredBooks = _.filter(booksData, q);
 

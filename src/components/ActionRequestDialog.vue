@@ -5,7 +5,7 @@
     <form novalidate @submit.prevent="sendRequest">
       <md-field>
         <label for="url">Target URL</label>
-        <md-input name="url" id="url" v-model="form.url" type="string" value="url"></md-input>
+        <md-input name="url" id="url" v-model.trim="form.url" type="string" value="url"></md-input>
       </md-field>
 
       <md-field :class="getValidationClass('headers')">
@@ -72,6 +72,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      requestHeaders: (state) => state.request.requestHeaders
+    })
+  },
   methods: {
     sendRequest() {
       this.$v.$touch();
@@ -97,11 +102,6 @@ export default {
         };
       }
     }
-  },
-  computed: {
-    ...mapState({
-      requestHeaders: (state) => state.request.requestHeaders
-    })
   },
   mounted() {
     this.form.headers = JSON.stringify(this.requestHeaders, null, 2);

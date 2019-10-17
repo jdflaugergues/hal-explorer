@@ -9,6 +9,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 import Navigation from './Navigation';
 import Resources from './Resources';
 

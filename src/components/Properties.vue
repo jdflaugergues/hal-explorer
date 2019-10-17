@@ -1,7 +1,7 @@
 <template>
   <div class="properties">
     <h2>Properties</h2>
-    <pre>{{ getProperties() }}</pre>
+    <pre>{{ properties }}</pre>
   </div>
 </template>
 
@@ -9,8 +9,8 @@
 export default {
   name: 'Properties',
   props: ['data'],
-  methods: {
-    getProperties() {
+  computed: {
+    properties() {
       const data = this.data;
 
       try {
