@@ -33,7 +33,7 @@ export default {
       try {
         const body = JSON.parse(JSON.stringify(this.data));
         return body && body._embedded;
-      } catch (e) {
+      } catch {
         return false;
       }
     },
@@ -46,7 +46,7 @@ export default {
         }
 
         return body._embedded;
-      } catch (e) {
+      } catch {
         return [];
       }
     }

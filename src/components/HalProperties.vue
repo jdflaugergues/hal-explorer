@@ -20,7 +20,7 @@ export default {
           delete body._embedded;
         }
         return body;
-      } catch (e) {
+      } catch {
         return '';
       }
     }
