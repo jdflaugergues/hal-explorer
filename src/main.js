@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueMaterial from 'vue-material';
 
-import App from './App';
+import HalApp from './HalApp';
 import router from './router';
 import store from './store';
 import ApiService from './services/api.service';
@@ -19,5 +19,5 @@ ApiService.init();
 new Vue({
   store,
   router,
-  render: (h) => h(App)
+  render: (h) => h(HalApp)
 }).$mount('#app');

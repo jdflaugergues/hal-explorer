@@ -18,7 +18,7 @@ const mapMethods = {
 };
 
 export default {
-  name: 'LinkActionButton',
+  name: 'HalLinkActionButton',
   props: {
     url: String,
     type: {

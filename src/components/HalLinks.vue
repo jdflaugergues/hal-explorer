@@ -23,33 +23,33 @@
           </md-button>
         </md-table-cell>
         <md-table-cell v-for="method in actionMethods" :key="method">
-          <LinkActionButton
+          <hal-link-action-button
             v-if="link.allow && link.allow.includes(method)"
             :type="method"
             :url="link.href"
             @click="handleClickActionButton"
-          ></LinkActionButton>
+          ></hal-link-action-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
-    <ActionRequestDialog
+    <hal-action-request-dialog
       :type="linkType"
       :url="linkUrl"
       :show="showDialog"
       @closeDialog="handleCloseDialog"
       @sendRequest="handleSendRequest"
-    ></ActionRequestDialog>
+    ></hal-action-request-dialog>
   </div>
 </template>
 
 <script>
-import LinkActionButton from './LinkActionButton';
-import ActionRequestDialog from './ActionRequestDialog';
+import HalLinkActionButton from './HalLinkActionButton';
+import HalActionRequestDialog from './HalActionRequestDialog';
 import { SEND_REQUEST, GET_DOCUMENTATION } from '../store/action-types';
 import { SET_LOADING } from '../store/mutation-types';
 
 export default {
-  name: 'Links',
+  name: 'HalLinks',
   props: ['data'],
   data() {
     return {
@@ -126,8 +126,8 @@ export default {
     }
   },
   components: {
-    LinkActionButton,
-    ActionRequestDialog
+    HalLinkActionButton,
+    HalActionRequestDialog
   }
 };
 </script>

@@ -10,7 +10,7 @@ import { mapState } from 'vuex';
 import marked from 'marked';
 
 export default {
-  name: 'Documentation',
+  name: 'HalDocumentation',
   computed: {
     ...mapState({
       documentation: (state) => marked(state.request.documentation)

@@ -9,7 +9,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Headers',
+  name: 'HalHeaders',
   computed: {
     ...mapGetters(['responseHeaders'])
   }

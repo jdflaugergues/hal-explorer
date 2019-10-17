@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Properties',
+  name: 'HalProgressSpinner',
   props: ['data'],
   computed: {
     properties() {

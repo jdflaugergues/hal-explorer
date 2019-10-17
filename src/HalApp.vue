@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <ProgressSpinner></ProgressSpinner>
+    <hal-progress-spinner></hal-progress-spinner>
     <router-view />
   </div>
 </template>
 
 <script>
-import ProgressSpinner from './components/ProgressSpinner';
+import HalProgressSpinner from './components/HalProgressSpinner';
 
 export default {
-  name: 'HalExplorer',
+  name: 'HalApp',
   components: {
-    ProgressSpinner
+    HalProgressSpinner
   }
 };
 </script>

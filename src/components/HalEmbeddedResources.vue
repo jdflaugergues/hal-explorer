@@ -9,7 +9,7 @@
           </div>
         </md-card-header-text>
         <md-card-content v-if="!!resourcesShown[`${resourcesName}${index}`]">
-          <resources :data="allResources[`${resourcesName}${index}`]"></resources>
+          <hal-resources :data="allResources[`${resourcesName}${index}`]"></hal-resources>
         </md-card-content>
       </md-card>
     </div>
@@ -20,7 +20,7 @@
 import { GET_ALLOWED_METHODS } from '../store/action-types';
 
 export default {
-  name: 'EmbeddedResources',
+  name: 'HalEmbeddedResources',
   props: ['data'],
   data() {
     return {
@@ -69,7 +69,7 @@ export default {
     }
   },
   components: {
-    Resources: () => import('./Resources')
+    HalResources: () => import('./HalResources')
   }
 };
 </script>
