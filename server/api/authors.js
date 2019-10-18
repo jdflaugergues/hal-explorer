@@ -45,6 +45,7 @@ async function getAuthor(ctx) {
 
 async function getAuthors(ctx) {
   const authorsData = ctx.state.db.authors;
+  const booksData = ctx.state.db.books;
   const q = ctx.query.q && JSON.parse(ctx.query.q);
   const baseUrl = `${mountPoint}/authors`;
   if (!authorsData.length) {
@@ -57,10 +58,19 @@ async function getAuthors(ctx) {
   const embeddedAuthors = filteredAuthors
     .slice(ctx.state.pagination.offset, ctx.state.pagination.offset + ctx.state.pagination.limit)
     .map((author) => {
-      return halson(author).addLink(
-        'self',
-        `${mountPoint}/authors/${author._id}`
-      );
+      const books = booksData
+        .filter((book) => book.authorId === author._id)
+        .map((book) => halson(book).addLink('self', `${mountPoint}/books/${book._id}`));
+
+      let halAuthor = halson(author).addLink('self', `${mountPoint}/authors/${author._id}`);
+
+      if (books.length) {
+        halAuthor = halAuthor
+          .addLink('books', `${mountPoint}/books?q={"authorId": "${author._id}"}`)
+          .addEmbed('books', books);
+      }
+
+      return halAuthor;
     });
 
   const resources = halson({
