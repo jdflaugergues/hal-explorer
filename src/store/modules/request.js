@@ -38,7 +38,6 @@ const getters = {
 
     const response = state.response.response || state.response;
     const headers = response.headers || state.response.headers;
-    const head = `${response.status} ${response.statusText}`;
 
     if (!headers) {
       return;
@@ -48,9 +47,20 @@ const getters = {
       if (!key) {
         return acc;
       }
-      acc += `\n${key}: ${headers[key]}`;
+      acc += `${key}: ${headers[key]}\n`;
       return acc;
-    }, `${head}\n`);
+    }, '');
+  },
+  responseStatus: (state) => {
+    if (!state.response.response && !state.response.headers && state.response instanceof Error) {
+      return {};
+    }
+
+    const response = state.response.response || state.response;
+    return {
+      status: response.status,
+      statusText: response.statusText
+    };
   },
   responseData: (state) => {
     const response = state.response;
