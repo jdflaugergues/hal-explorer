@@ -1,3 +1,4 @@
+[![Runme](https://runme.io/static/button.svg)](https://runme.io/run?app_id=a1788394-f898-4463-babc-a7802272dc92)
 [![Build Status](https://travis-ci.org/jdflaugergues/hal-explorer.svg?branch=master)](https://travis-ci.org/jdflaugergues/hal-explorer)
 <a href="#badge">
   <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
